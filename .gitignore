@@ -19,5 +19,9 @@ __pycache__/
 .idea/
 *.swp
 
+# Pabot (execucao paralela)
+.pabotsuitenames
+pabot_manager.log
+
 # Claude Code
 .claude/
