@@ -1,0 +1,23 @@
+# Ambiente virtual
+.venv/
+venv/
+
+# Resultados e relatorios gerados
+results/
+*.xml
+
+# Planilha com dados pessoais (baixada manualmente)
+data/challenge.xlsx
+
+# Cache Python
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+
+# Claude Code
+.claude/
