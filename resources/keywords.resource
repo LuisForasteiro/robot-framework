@@ -1,6 +1,6 @@
 *** Settings ***
-Library     Browser                             # Playwright via robotframework-browser
-Library     openpyxl                            # Leitura do Excel
+Library     Browser                                 # Playwright via robotframework-browser
+Library     ${CURDIR}/ExcelReader.py                # Leitura robusta do Excel
 Library     OperatingSystem
 Library     Collections
 Resource    locators.resource
@@ -21,16 +21,11 @@ Abrir Site RPA Challenge
     Log    Pagina carregada: ${URL}
 
 Ler Dados Da Planilha
-    # Le o arquivo Excel usando openpyxl e retorna uma lista de dicionarios.
-    # Cada dicionario representa uma pessoa com as chaves sendo os nomes das colunas.
-    [Return]    ${data}
-    ${workbook}=    Evaluate    __import__('openpyxl').load_workbook('${EXCEL_PATH}')    modules=openpyxl
-    ${sheet}=       Evaluate    $workbook.active
-    # Extrai os cabecalhos da primeira linha
-    ${headers}=     Evaluate    [cell.value for cell in list($sheet.iter_rows())[0]]
-    # Monta lista de dicionarios para cada linha de dados (pulando o cabecalho)
-    ${data}=        Evaluate
-    ...    [dict(zip(${headers}, [c.value for c in row])) for row in list($sheet.iter_rows(min_row=2)) if any(c.value for c in row)]
+    # Le o arquivo Excel via ExcelReader.py e retorna lista de dicionarios.
+    # Cada dicionario representa uma pessoa com chaves como "First Name", "Email", etc.
+    ${data}=    Read Challenge Data    ${EXCEL_PATH}
+    Log    ${data}
+    RETURN    ${data}
 
 Iniciar Desafio
     # Clica no botao Start para comecar o desafio e aguarda o formulario aparecer
@@ -63,4 +58,4 @@ Capturar Resultado Final
     Wait For Elements State    ${DIV_RESULT}    visible    timeout=${TIMEOUT}
     ${resultado}=    Get Text    ${DIV_RESULT}
     Log    RESULTADO FINAL: ${resultado}    console=True
-    [Return]    ${resultado}
+    RETURN    ${resultado}

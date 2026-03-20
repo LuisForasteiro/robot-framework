@@ -3,7 +3,7 @@
 ${URL}                      https://rpachallenge.com/
 
 # Botoes da pagina principal
-${BTN_START}                text=Start
+${BTN_START}                button.uiColorButton
 ${BTN_SUBMIT}               input[type="submit"][value="Submit"]
 
 # Link de download da planilha
